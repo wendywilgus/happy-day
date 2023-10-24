@@ -1,14 +1,18 @@
-
-import { FoodTag, foodTags, foods } from "./assets/food";
+import { foodTags } from "./assets/food";
 import { useSearchParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
-function App() {
+export default function Menu() {
   //use router for search params
   const [searchParams, setSearchParams] = useSearchParams();
   const tag = searchParams.get("tag") ?? "All";
 
+  const { data: foods = [] } = useFoods();
+
   const matchingFoods =
-    tag === "All" ? foods : foods.filter((food) => food.tags.includes(tag));
+    tag === "All" 
+      ? foods 
+      : foods.filter((food) => food.tags.includes(tag));
 
   return (
     <>
@@ -50,4 +54,3 @@ function App() {
   );
 }
 
-export default App;
